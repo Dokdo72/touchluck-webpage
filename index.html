@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TouchLuck</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #0d0d0d;
+      color: #f0f0f0;
+      text-align: center;
+    }
+
+    header {
+      padding: 3rem 1rem 2rem;
+    }
+
+    header img {
+      width: 110px;
+      height: 110px;
+      border-radius: 24px;
+      box-shadow: 0 4px 20px rgba(0, 216, 255, 0.2);
+    }
+
+    h1 {
+      margin: 1rem 0 1.2rem;
+      font-size: 2.2rem;
+      background: linear-gradient(to right, #00d8ff, #00ffa3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      max-width: 640px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+      font-size: 1.05rem;
+      color: #ccc;
+    }
+
+    .screenshots {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+    }
+
+    .screenshots img {
+      width: 200px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0, 216, 255, 0.15);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .screenshots img:hover {
+      transform: scale(1.05);
+    }
+
+    a {
+      color: #00d8ff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* 앱스토어 블록 */
+    .appstore-section {
+      margin: 3rem 0 1rem;
+    }
+
+    .appstore-icon {
+      width: 120px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
+
+    .appstore-icon:hover {
+      transform: scale(1.05);
+    }
+
+    .appstore-label {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      color: #aaa;
+    }
+
+    .contact {
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    footer {
+      margin-top: 1rem;
+      padding: 1rem;
+      color: #666;
+      font-size: 0.75rem;
+    }
+
+    /* 모달 스타일 */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: rgba(0,0,0,0.95);
+    }
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(0, 216, 255, 0.4);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      color: #ccc;
+      font-size: 36px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      color: #fff;
+    }
+
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 48px;
+      color: #00d8ff;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      user-select: none;
+      padding: 0 20px;
+    }
+
+    .nav-button:hover {
+      color: #ffffff;
+    }
+
+    .prev-button {
+      left: 10px;
+    }
+
+    .next-button {
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="AppIcon.png" alt="TouchLuck App Icon" />
+    <h1>TouchLuck</h1>
+    <p>화면에 여러 명이 동시에 터치하면 무작위로 한 사람을 선택해주는 앱!<br />
+      회식, 파티, 벌칙 게임, 룰렛이 필요한 모든 순간을 간편하게!</p>
+  </header>
+
+  <section class="screenshots">
+    <img src="Screenshot1.PNG" alt="앱 스크린샷 1" onclick="openModal(0)" />
+    <img src="Screenshot2.PNG" alt="앱 스크린샷 2" onclick="openModal(1)" />
+  </section>
+
+  <p><a href="changelog.html">📋 버전 기록 보기</a></p>
+
+  <!-- ✅ App Store + 안내 문구 -->
+  <section class="appstore-section">
+    <a href="https://apps.apple.com/app/idYOUR_APP_ID_HERE" target="_blank">
+      <img src="App-Store_logo.png" alt="App Store에서 다운로드" class="appstore-icon" />
+    </a>
+    <div class="appstore-label">App Store에서 다운로드</div>
+  </section>
+
+  <!-- ✅ 문의 메일 (작고 조용히) -->
+  <div class="contact">문의메일 : 📧 <a href="mailto:eowert72@gmail.com">eowert72@gmail.com</a></div>
+
+  <footer>
+    © 2025 TouchLuck. All rights reserved.
+  </footer>
+
+  <!-- 이미지 모달 -->
+  <div id="imgModal" class="modal">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+    <button class="nav-button prev-button" onclick="changeSlide(-1)">&#10094;</button>
+    <img class="modal-content" id="modalImage" />
+    <button class="nav-button next-button" onclick="changeSlide(1)">&#10095;</button>
+  </div>
+
+  <script>
+    const images = ["Screenshot1.PNG", "Screenshot2.PNG"];
+    let currentIndex = 0;
+
+    function openModal(index) {
+      currentIndex = index;
+      document.getElementById("modalImage").src = images[currentIndex];
+      document.getElementById("imgModal").style.display = "block";
+    }
+
+    function closeModal() {
+      document.getElementById("imgModal").style.display = "none";
+    }
+
+    function changeSlide(direction) {
+      currentIndex += direction;
+      if (currentIndex < 0) currentIndex = images.length - 1;
+      if (currentIndex >= images.length) currentIndex = 0;
+      document.getElementById("modalImage").src = images[currentIndex];
+    }
+
+    document.addEventListener('keydown', (e) => {
+      const modal = document.getElementById("imgModal");
+      if (modal.style.display === "block") {
+        if (e.key === 'ArrowLeft') changeSlide(-1);
+        else if (e.key === 'ArrowRight') changeSlide(1);
+        else if (e.key === 'Escape') closeModal();
+      }
+    });
+  </script>
+</body>
+</html>
